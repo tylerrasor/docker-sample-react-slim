@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  db:
+    build: ./database
+    ports:
+      - 5432:5432
+
+  api:
+    build: ./backend-api
+    volumes:
+      - ./backend-api:/app
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+
+  spa:
+    build: ./frontend-spa
+    volumes:
+      - ./frontend-spa:/app
+    ports:
+      - 3000:3000
+    depends_on:
+      - api
